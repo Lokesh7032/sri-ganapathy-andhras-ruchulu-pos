@@ -14,8 +14,7 @@ import { db } from "./db.js";
 import { login,setSession,clearSession,requireAuth,requireAdmin,requireSuperAdmin,branchScope,hashPassword } from "./auth.js";
 import { initRealtime,emitBranch,emitOrder } from "./realtime.js";
 import { receiptPdf } from "./pdf.js";
-
-const publicDir=path.resolve(process.cwd(),"public");
+const publicDir = path.resolve(process.cwd(), "public");
 const app = express(); const server=http.createServer(app);
 /*
  * ================================================================
@@ -564,6 +563,3 @@ if (process.env.NETLIFY !== "true") {
 }
 
 export { app };
-
-
-
