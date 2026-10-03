@@ -20,11 +20,13 @@
   from = "/"
   to = "/pos/"
   status = 302
+  force = true
 
 [[redirects]]
   from = "/pos"
   to = "/pos/"
   status = 301
+  force = true
 
 [[redirects]]
   from = "/admin/*"

@@ -88,8 +88,99 @@
 
 <script src="/pos/sgar-final-production.js"></script>
 <script src="/pos/sgar-single-pos-final.js" defer></script>
+
+<!-- SGAR 2 SECOND SPLASH -->
+<div id="sgar-splash-screen" aria-label="Sri Ganapathy Andhra's Ruchulu">
+    <div class="sgar-splash-inner">
+        <img src="/pos/favicon.ico"
+             alt="Sri Ganapathy Andhra's Ruchulu"
+             class="sgar-splash-logo"
+             onerror="this.style.display='none'">
+        <div class="sgar-splash-brand">SRI GANAPATHY</div>
+        <div class="sgar-splash-sub">ANDHRA'S RUCHULU</div>
+    </div>
+</div>
+
+<style>
+#sgar-splash-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 2147483647;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity .22s ease, visibility .22s ease;
+}
+
+#sgar-splash-screen.sgar-splash-hide {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.sgar-splash-inner {
+    width: min(90vw, 420px);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.sgar-splash-logo {
+    width: min(150px, 42vw);
+    height: min(150px, 42vw);
+    object-fit: contain;
+    margin-bottom: 18px;
+}
+
+.sgar-splash-brand {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: clamp(22px, 5vw, 34px);
+    font-weight: 800;
+    letter-spacing: .08em;
+}
+
+.sgar-splash-sub {
+    margin-top: 6px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: clamp(11px, 2.8vw, 15px);
+    letter-spacing: .18em;
+    opacity: .68;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #sgar-splash-screen {
+        transition: none;
+    }
+}
+</style>
+
+<script>
+(function () {
+    var splash = document.getElementById("sgar-splash-screen");
+
+    if (!splash) return;
+
+    window.setTimeout(function () {
+        splash.classList.add("sgar-splash-hide");
+
+        window.setTimeout(function () {
+            if (splash && splash.parentNode) {
+                splash.parentNode.removeChild(splash);
+            }
+        }, 260);
+    }, 2000);
+})();
+</script>
+
 </body>
 </html>
+
+
 
 
 

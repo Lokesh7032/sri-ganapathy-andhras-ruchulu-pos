@@ -8,7 +8,6 @@ import cookieParser from "cookie-parser";
 import compression from "compression";
 import http from "http";
 import path from "path";
-import { fileURLToPath } from "url";
 import { z } from "zod";
 import QRCode from "qrcode";
 import { db } from "./db.js";
@@ -16,9 +15,8 @@ import { login,setSession,clearSession,requireAuth,requireAdmin,requireSuperAdmi
 import { initRealtime,emitBranch,emitOrder } from "./realtime.js";
 import { receiptPdf } from "./pdf.js";
 
-const __dirname=path.dirname(fileURLToPath(import.meta.url));
 const publicDir=path.resolve(process.cwd(),"public");
-const app=express(); const server=http.createServer(app);
+const app = express(); const server=http.createServer(app);
 /*
  * ================================================================
  * SGAR AUTHENTICATION ENTRY ROUTES
@@ -569,47 +567,17 @@ app.get("/kds/*rest",(_,res)=>res.sendFile(path.join(publicDir,"kds/index.html")
 app.get("/order/:token",(_,res)=>res.sendFile(path.join(publicDir,"customer/index.html")));
 app.get("*rest",(_,res)=>res.sendFile(path.join(publicDir,"pos/index.html")));
 
-export { app };
-
 if (process.env.NETLIFY !== "true") {
   initRealtime(server);
-  const port=Number(process.env.PORT||4000);
-  server.listen(
-    port,
-    ()=>console.log(`Sri Ganapathy Andhra's Ruchulu POS running on ${baseUrl()}`)
-  );
+
+  const port = Number(process.env.PORT || 4000);
+  const host = process.env.HOST || "0.0.0.0";
+
+  server.listen(port, host, () => {
+    console.log(`Server running on ${host}:${port}`);
+  });
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export { app };
 
 
