@@ -539,65 +539,35 @@ function noCache(res:any){
 app.get("/pos",(req,res)=>{
     noCache(res);
     res.sendFile(
-        path.join(publicDir/pos/index.html")
+        path.join(publicDir,"pos/index.html")
     );
 });
 
 app.get("/pos/",(req,res)=>{
     noCache(res);
     res.sendFile(
-        path.join(publicDir/pos/index.html")
+        path.join(publicDir,"pos/index.html")
     );
 });
 
 app.get("/pos/index.html",(req,res)=>{
     noCache(res);
     res.sendFile(
-        path.join(publicDir/pos/index.html")
+        path.join(publicDir,"pos/index.html")
     );
 });
 
 app.get("/pos/login.html",(req,res)=>{ noCache(res); res.redirect("/pos/"); });
 
-app.get("/pos/dashboard.html",(req,res)=>{ noCache(res); res.redirect("/pos/"); });
-
-app.get("/pos/app.js",(req,res)=>{
-    noCache(res);
-    res.type("application/javascript");
-    res.sendFile(
-        path.join(publicDir/pos/app.js")
-    );
-});
-
-app.get("/pos/style.css",(req,res)=>{
-    noCache(res);
-    res.type("text/css");
-    res.sendFile(
-        path.join(publicDir/pos/style.css")
-    );
-});
-
-
-
-/*
- * API responses must never be cached.
- */
-app.use((req,res,next)=>{
-    if(req.path.startsWith("/api/")){
-        res.setHeader("Cache-Control","no-store");
-    }
-    next();
-});
-
 app.get("/", (_req, res) => { res.redirect("/pos/"); });
 
-app.use(express.static(path.join(publicDir")));
-app.get("/b/:slug/pos",(_,res)=>res.sendFile(path.join(publicDir/pos/index.html")));
-app.get("/b/:slug/pos/*rest",(_,res)=>res.sendFile(path.join(publicDir/pos/index.html")));
-app.get("/admin/*rest",(_,res)=>res.sendFile(path.join(publicDir/admin/index.html")));
-app.get("/kds/*rest",(_,res)=>res.sendFile(path.join(publicDir/kds/index.html")));
-app.get("/order/:token",(_,res)=>res.sendFile(path.join(publicDir/customer/index.html")));
-app.get("*rest",(_,res)=>res.sendFile(path.join(publicDir/pos/index.html")));
+app.use(express.static(publicDir));
+app.get("/b/:slug/pos",(_,res)=>res.sendFile(path.join(publicDir,"pos/index.html")));
+app.get("/b/:slug/pos/*rest",(_,res)=>res.sendFile(path.join(publicDir,"pos/index.html")));
+app.get("/admin/*rest",(_,res)=>res.sendFile(path.join(publicDir,"admin/index.html")));
+app.get("/kds/*rest",(_,res)=>res.sendFile(path.join(publicDir,"kds/index.html")));
+app.get("/order/:token",(_,res)=>res.sendFile(path.join(publicDir,"customer/index.html")));
+app.get("*rest",(_,res)=>res.sendFile(path.join(publicDir,"pos/index.html")));
 
 export { app };
 
@@ -609,6 +579,12 @@ if (process.env.NETLIFY !== "true") {
     ()=>console.log(`Sri Ganapathy Andhra's Ruchulu POS running on ${baseUrl()}`)
   );
 }
+
+
+
+
+
+
 
 
 

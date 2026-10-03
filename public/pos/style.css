@@ -3485,3 +3485,808 @@ body{
 
 
 
+
+/* ================================================================
+   SGAR POS - RESPONSIVE PRODUCTION SAFETY LAYER
+   Desktop / Laptop / Tablet / Mobile
+   ================================================================ */
+
+html {
+    width: 100%;
+    min-height: 100%;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    min-height: 100dvh;
+    margin: 0;
+    overflow-x: hidden;
+    overscroll-behavior-x: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+button,
+[role="button"] {
+    min-height: 42px;
+    touch-action: manipulation;
+}
+
+input,
+select,
+textarea {
+    max-width: 100%;
+}
+
+img,
+svg,
+video,
+canvas {
+    max-width: 100%;
+    height: auto;
+}
+
+table {
+    max-width: 100%;
+}
+
+@media (max-width: 1200px) {
+
+    .pos-layout,
+    .billing-layout,
+    .main-layout,
+    .content-layout {
+        min-width: 0 !important;
+        max-width: 100% !important;
+    }
+
+    .products,
+    .product-grid,
+    .menu-grid {
+        min-width: 0 !important;
+    }
+}
+
+@media (max-width: 900px) {
+
+    body {
+        overflow-x: hidden;
+    }
+
+    .sidebar {
+        max-width: 86vw;
+    }
+
+    .modal,
+    .dialog,
+    .popup,
+    .drawer {
+        max-width: calc(100vw - 24px) !important;
+    }
+
+    .modal-content,
+    .dialog-content {
+        max-width: 100%;
+        max-height: calc(100dvh - 24px);
+        overflow-y: auto;
+    }
+}
+
+@media (max-width: 768px) {
+
+    body {
+        min-height: 100dvh;
+    }
+
+    header,
+    .header,
+    .topbar,
+    .navbar {
+        max-width: 100%;
+    }
+
+    .container,
+    .page,
+    .content,
+    .main,
+    .workspace {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    .grid,
+    .products,
+    .product-grid,
+    .menu-grid,
+    .cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    .two-column,
+    .split,
+    .billing-layout,
+    .checkout-layout {
+        grid-template-columns: 1fr !important;
+    }
+
+    .table-wrap,
+    .table-container,
+    .data-table {
+        max-width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    button,
+    .btn,
+    .action,
+    .product-button,
+    .payment-button {
+        min-height: 44px;
+    }
+
+    input,
+    select,
+    textarea {
+        min-height: 44px;
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 520px) {
+
+    .grid,
+    .products,
+    .product-grid,
+    .menu-grid,
+    .cards {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 8px !important;
+    }
+
+    .product-card,
+    .menu-card {
+        min-width: 0 !important;
+        width: 100%;
+    }
+
+    .product-card img,
+    .menu-card img {
+        max-width: 100%;
+        object-fit: cover;
+    }
+
+    .modal,
+    .dialog,
+    .popup,
+    .drawer {
+        width: calc(100vw - 16px) !important;
+        max-width: calc(100vw - 16px) !important;
+        margin: 8px !important;
+        border-radius: 14px;
+    }
+
+    .modal-content,
+    .dialog-content {
+        width: 100%;
+        max-height: calc(100dvh - 16px);
+    }
+
+    .actions,
+    .button-row,
+    .toolbar,
+    .filters {
+        flex-wrap: wrap !important;
+    }
+
+    .actions > *,
+    .button-row > * {
+        max-width: 100%;
+    }
+
+    .cart,
+    .cart-panel,
+    .bill-panel,
+    .order-panel {
+        min-width: 0 !important;
+        max-width: 100% !important;
+    }
+}
+
+@media (max-width: 380px) {
+
+    .grid,
+    .products,
+    .product-grid,
+    .menu-grid,
+    .cards {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* Safe-area support for modern phones */
+@supports (padding: env(safe-area-inset-top)) {
+
+    body {
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    header,
+    .header,
+    .topbar {
+        padding-top: max(8px, env(safe-area-inset-top));
+    }
+}
+
+/* Prevent accidental horizontal page movement */
+#app,
+#root,
+.app,
+.page-root {
+    min-width: 0;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+/* Never let text force horizontal scrolling */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+label,
+td,
+th {
+    overflow-wrap: anywhere;
+}
+
+/* Better touch scrolling */
+.scroll,
+.scroll-area,
+.list,
+.table-wrap {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+}
+
+/* iOS input zoom prevention */
+@media (max-width: 768px) {
+    input,
+    select,
+    textarea {
+        font-size: 16px !important;
+    }
+}
+
+/* ================================================================
+   SGAR FINAL RESPONSIVE PRODUCTION LAYER
+   Desktop + Laptop + Tablet + Mobile
+   ================================================================ */
+
+html {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    min-height: 100%;
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+body {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    min-height: 100dvh;
+    margin: 0;
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+img,
+svg,
+video,
+canvas {
+    max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+    max-width: 100%;
+}
+
+button,
+[role="button"] {
+    touch-action: manipulation;
+}
+
+input,
+select,
+textarea {
+    min-width: 0;
+}
+
+#app,
+#root,
+.app,
+.page-root,
+.workspace,
+.container,
+.page,
+.content,
+.main {
+    min-width: 0;
+    max-width: 100%;
+}
+
+.table-wrap,
+.table-container,
+.data-table {
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 1200px) {
+
+    .pos-layout,
+    .billing-layout,
+    .main-layout,
+    .content-layout,
+    .workspace {
+        min-width: 0 !important;
+        max-width: 100% !important;
+    }
+}
+
+@media (max-width: 900px) {
+
+    .sidebar {
+        max-width: 88vw;
+    }
+
+    .modal,
+    .dialog,
+    .popup,
+    .drawer {
+        max-width: calc(100vw - 24px) !important;
+    }
+
+    .modal-content,
+    .dialog-content {
+        max-width: 100%;
+        max-height: calc(100dvh - 24px);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+@media (max-width: 768px) {
+
+    body {
+        min-height: 100dvh;
+    }
+
+    .container,
+    .page,
+    .content,
+    .main,
+    .workspace {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    .two-column,
+    .split,
+    .billing-layout,
+    .checkout-layout {
+        grid-template-columns: 1fr !important;
+    }
+
+    button,
+    .btn,
+    .action,
+    .product-button,
+    .payment-button {
+        min-height: 44px;
+    }
+
+    input,
+    select,
+    textarea {
+        min-height: 44px;
+        font-size: 16px !important;
+    }
+
+    .toolbar,
+    .actions,
+    .button-row,
+    .filters {
+        flex-wrap: wrap !important;
+    }
+
+    .table-wrap,
+    .table-container,
+    .data-table {
+        overflow-x: auto !important;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 520px) {
+
+    .grid,
+    .products,
+    .product-grid,
+    .menu-grid,
+    .cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 8px !important;
+    }
+
+    .product-card,
+    .menu-card,
+    .card {
+        min-width: 0 !important;
+        max-width: 100%;
+    }
+
+    .modal,
+    .dialog,
+    .popup,
+    .drawer {
+        width: calc(100vw - 16px) !important;
+        max-width: calc(100vw - 16px) !important;
+        max-height: calc(100dvh - 16px);
+        margin: 8px !important;
+    }
+
+    .modal-content,
+    .dialog-content {
+        width: 100%;
+        max-height: calc(100dvh - 16px);
+        overflow-y: auto;
+    }
+
+    .cart,
+    .cart-panel,
+    .bill-panel,
+    .order-panel {
+        min-width: 0 !important;
+        max-width: 100% !important;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    span,
+    label,
+    td,
+    th {
+        overflow-wrap: anywhere;
+    }
+}
+
+@media (max-width: 380px) {
+
+    .grid,
+    .products,
+    .product-grid,
+    .menu-grid,
+    .cards {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* iPhone / Android safe-area */
+@supports (padding: env(safe-area-inset-top)) {
+
+    body {
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    header,
+    .header,
+    .topbar {
+        padding-top: max(8px, env(safe-area-inset-top));
+    }
+}
+
+/* Never create accidental page-wide horizontal scroll */
+html,
+body,
+#app,
+#root {
+    overflow-x: hidden;
+}
+
+/* Touch scrolling */
+.scroll,
+.scroll-area,
+.list,
+.table-wrap,
+.table-container {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+}
+
+/* ================================================================
+   SGAR FINAL MOBILE RESPONSIVE
+   Desktop / Laptop / Tablet / Android / iPhone
+   ================================================================ */
+
+html {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    min-height: 100dvh;
+    margin: 0;
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+img,
+svg,
+video,
+canvas {
+    max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+    max-width: 100%;
+}
+
+button,
+[role="button"] {
+    touch-action: manipulation;
+}
+
+input,
+select,
+textarea {
+    min-width: 0;
+}
+
+#app,
+#root,
+.app,
+.page-root,
+.workspace,
+.container,
+.page,
+.content,
+.main {
+    min-width: 0;
+    max-width: 100%;
+}
+
+.table-wrap,
+.table-container,
+.data-table {
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 1024px) {
+    .pos-layout,
+    .billing-layout,
+    .main-layout,
+    .content-layout {
+        min-width: 0 !important;
+        max-width: 100% !important;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .container,
+    .page,
+    .content,
+    .main,
+    .workspace {
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+    }
+
+    .billing-layout,
+    .checkout-layout,
+    .two-column,
+    .split {
+        grid-template-columns: 1fr !important;
+    }
+
+    button,
+    .btn,
+    .action,
+    .product-button,
+    .payment-button {
+        min-height: 44px;
+    }
+
+    input,
+    select,
+    textarea {
+        min-height: 44px;
+        font-size: 16px !important;
+    }
+
+    .toolbar,
+    .actions,
+    .button-row,
+    .filters {
+        flex-wrap: wrap !important;
+    }
+
+    .table-wrap,
+    .table-container,
+    .data-table {
+        overflow-x: auto !important;
+    }
+
+    .modal,
+    .dialog,
+    .popup,
+    .drawer {
+        max-width: calc(100vw - 20px) !important;
+        max-height: calc(100dvh - 20px);
+    }
+
+    .modal-content,
+    .dialog-content {
+        max-width: 100%;
+        max-height: calc(100dvh - 20px);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+@media (max-width: 520px) {
+
+    .grid,
+    .products,
+    .product-grid,
+    .menu-grid,
+    .cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 8px !important;
+    }
+
+    .product-card,
+    .menu-card,
+    .card {
+        min-width: 0 !important;
+        max-width: 100%;
+    }
+
+    .cart,
+    .cart-panel,
+    .bill-panel,
+    .order-panel {
+        min-width: 0 !important;
+        max-width: 100% !important;
+    }
+
+    .modal,
+    .dialog,
+    .popup,
+    .drawer {
+        width: calc(100vw - 16px) !important;
+        max-width: calc(100vw - 16px) !important;
+        margin: 8px !important;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    span,
+    label,
+    td,
+    th {
+        overflow-wrap: anywhere;
+    }
+}
+
+@media (max-width: 380px) {
+
+    .grid,
+    .products,
+    .product-grid,
+    .menu-grid,
+    .cards {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+@supports (padding: env(safe-area-inset-top)) {
+
+    body {
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    header,
+    .header,
+    .topbar {
+        padding-top: max(8px, env(safe-area-inset-top));
+    }
+}
+
+html,
+body,
+#app,
+#root {
+    overflow-x: hidden;
+}
+
+.scroll,
+.scroll-area,
+.list,
+.table-wrap,
+.table-container {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+}
