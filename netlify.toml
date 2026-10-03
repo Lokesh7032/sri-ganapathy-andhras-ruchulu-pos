@@ -10,30 +10,17 @@
   directory = "netlify/functions"
   node_bundler = "esbuild"
 
-# ============================================================
-# API -> SERVERLESS FUNCTION
-# ============================================================
-
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/api/:splat"
   status = 200
   force = true
 
-# Health MUST reach Express function
 [[redirects]]
   from = "/health"
   to = "/.netlify/functions/api/health"
   status = 200
   force = true
-
-# ============================================================
-# ROOT / POS
-#
-# IMPORTANT:
-# DO NOT use 301/302 here.
-# Direct rewrites prevent redirect loops.
-# ============================================================
 
 [[redirects]]
   from = "/"
@@ -53,10 +40,6 @@
   status = 200
   force = true
 
-# ============================================================
-# ADMIN
-# ============================================================
-
 [[redirects]]
   from = "/admin"
   to = "/admin/index.html"
@@ -75,10 +58,6 @@
   status = 200
   force = true
 
-# ============================================================
-# KDS
-# ============================================================
-
 [[redirects]]
   from = "/kds"
   to = "/kds/index.html"
@@ -96,10 +75,6 @@
   to = "/kds/index.html"
   status = 200
   force = true
-
-# ============================================================
-# CUSTOMER ORDER
-# ============================================================
 
 [[redirects]]
   from = "/order/*"
