@@ -534,30 +534,15 @@ function noCache(res:any){
     res.setHeader("Expires","0");
 }
 
-app.get("/pos",(req,res)=>{
-    noCache(res);
-    res.sendFile(
-        path.join(publicDir,"pos/index.html")
-    );
-});
 
-app.get("/pos/",(req,res)=>{
-    noCache(res);
-    res.sendFile(
-        path.join(publicDir,"pos/index.html")
-    );
-});
 
-app.get("/pos/index.html",(req,res)=>{
-    noCache(res);
-    res.sendFile(
-        path.join(publicDir,"pos/index.html")
-    );
-});
 
-app.get("/pos/login.html",(req,res)=>{ noCache(res); res.redirect("/pos/"); });
 
-app.get("/", (_req, res) => { res.redirect("/pos/"); });
+
+
+
+
+
 
 app.use(express.static(publicDir));
 app.get("/b/:slug/pos",(_,res)=>res.sendFile(path.join(publicDir,"pos/index.html")));
@@ -579,5 +564,6 @@ if (process.env.NETLIFY !== "true") {
 }
 
 export { app };
+
 
 

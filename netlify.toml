@@ -10,35 +10,58 @@
   directory = "netlify/functions"
   node_bundler = "esbuild"
 
+# API -> Netlify Function
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/api/:splat"
   status = 200
   force = true
 
+# ROOT -> POS INDEX, NO 301/302
 [[redirects]]
   from = "/"
-  to = "/pos/"
-  status = 302
+  to = "/pos/index.html"
+  status = 200
   force = true
 
+# /pos -> POS INDEX
 [[redirects]]
   from = "/pos"
-  to = "/pos/"
-  status = 301
+  to = "/pos/index.html"
+  status = 200
   force = true
 
+# /pos/ -> POS INDEX
+[[redirects]]
+  from = "/pos/"
+  to = "/pos/index.html"
+  status = 200
+  force = true
+
+# Branch POS
+[[redirects]]
+  from = "/b/*/pos"
+  to = "/pos/index.html"
+  status = 200
+  force = true
+
+# Admin SPA
 [[redirects]]
   from = "/admin/*"
   to = "/admin/index.html"
   status = 200
+  force = true
 
+# KDS
 [[redirects]]
   from = "/kds/*"
   to = "/kds/index.html"
   status = 200
+  force = true
 
+# Customer ordering
 [[redirects]]
   from = "/order/*"
   to = "/customer/index.html"
   status = 200
+  force = true
