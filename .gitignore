@@ -26,3 +26,8 @@ Thumbs.db
 
 .vercel/
 .netlify/
+__direct_neon_test.cjs
+__production_admin.cjs
+__production_admin_final.cjs
+__verify_admin.cjs
+

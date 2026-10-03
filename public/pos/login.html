@@ -391,7 +391,136 @@ body{
 })();
 </script>
 
+
+<script>
+(function(){
+
+  const form = document.getElementById("loginForm");
+
+  if(!form) return;
+
+  form.setAttribute("novalidate","");
+
+  form.addEventListener("submit", async function(e){
+
+    e.preventDefault();
+    e.stopImmediatePropagation();
+
+    const user =
+      document.getElementById("loginUser")?.value?.trim() || "";
+
+    const pass =
+      document.getElementById("loginPass")?.value || "";
+
+    const error =
+      document.getElementById("loginError");
+
+    const btn =
+      document.querySelector(".loginSubmit");
+
+    if(error){
+      error.textContent = "";
+      error.style.display = "none";
+    }
+
+    if(!user || !pass){
+
+      if(error){
+        error.textContent = "Username and password are required.";
+        error.style.display = "block";
+      }
+
+      return false;
+    }
+
+    if(btn){
+      btn.disabled = true;
+      btn.textContent = "Signing in…";
+    }
+
+    try{
+
+      const r = await fetch("/api/auth/login",{
+        method:"POST",
+        credentials:"include",
+        cache:"no-store",
+        headers:{
+          "Content-Type":"application/json",
+          "Accept":"application/json",
+          "Cache-Control":"no-cache"
+        },
+        body:JSON.stringify({
+          username:user,
+          password:pass
+        })
+      });
+
+      const d = await r.json().catch(()=>({}));
+
+      if(!r.ok){
+        throw new Error(
+          d.error ||
+          d.message ||
+          "Login failed."
+        );
+      }
+
+      const me =
+        await fetch("/api/me",{
+          credentials:"include",
+          cache:"no-store",
+          headers:{
+            "Accept":"application/json",
+            "Cache-Control":"no-cache"
+          }
+        });
+
+      const md =
+        await me.json().catch(()=>({}));
+
+      if(!me.ok || !md.user){
+        throw new Error(
+          "Login succeeded, but session verification failed."
+        );
+      }
+
+      await new Promise(
+        resolve => setTimeout(resolve,80)
+      );
+
+      window.location.replace(
+        "/pos/?auth=" + Date.now()
+      );
+
+    }catch(err){
+
+      console.error("[SGAR AUTH]",err);
+
+      if(error){
+
+        error.textContent =
+          err?.message ||
+          "Unable to sign in.";
+
+        error.style.display = "block";
+      }
+
+      if(btn){
+
+        btn.disabled = false;
+        btn.textContent = "Sign in";
+      }
+    }
+
+    return false;
+
+  },true);
+
+})();
+</script>
 </body>
 </html>
+
+
 
 

@@ -108,25 +108,31 @@ app.post(
   }
 );
 app.post("/api/auth/logout",(req,res)=>{clearSession(res);res.json({ok:true});});
-app.get("/api/me",requireAuth,async(req,res)=>{const s=(req as any).session;const user=await db.user.findUnique({where:{id:s.userId},include:{branch:true}});res.json({user});});
-app.patch("/api/me/password",requireAuth,async(req,res)=>{const p=z.object({currentPassword:z.string(),newPassword:z.string().min(8)}).safeParse(req.body);if(!p.success)return res.status(400).json({error:"Invalid password"});const s=(req as any).session;const u=await db.user.findUnique({where:{id:s.userId}});if(!u)return res.status(404).json({error:"User not found"});const bcrypt=await import("bcryptjs");if(!(await bcrypt.compare(p.data.currentPassword,u.passwordHash)))return res.status(400).json({error:"Current password is incorrect"});await db.user.update({where:{id:u.id},data:{passwordHash:await hashPassword(p.data.newPassword)}});res.json({ok:true});});
+app.get("/api/me",requireAuth,async(req,res)=>{
+  const s=(req as any).session;
 
-app.get("/api/public/branch/:slug",async(req,res)=>{const b=await db.branch.findUnique({where:{slug:req.params.slug}});if(!b||!b.active)return res.status(404).json({error:"Branch not available"});res.json({id:b.id,name:b.name,code:b.code,phone:b.phone,address:b.address,slug:b.slug,posUrl:`${baseUrl()}/b/${b.slug}/pos`,customerBaseUrl:`${baseUrl()}/order`});});
-app.get("/api/branches",requireAuth,async(req,res)=>{const s=(req as any).session;if(["SUPER_ADMIN","ADMIN"].includes(s.role))return res.json(await db.branch.findMany({orderBy:{name:"asc"}}));const b=s.branchId?await db.branch.findUnique({where:{id:s.branchId}}):null;res.json(b?[b]:[]);});
-app.post("/api/branches",requireAuth,requireSuperAdmin,async(req,res)=>{
-  const p=branchInput.safeParse(req.body);if(!p.success)return res.status(400).json({error:p.error.issues[0]?.message||"Invalid branch"});
-  const slug=p.data.slug||slugify(p.data.name);const hash=await hashPassword(p.data.salesPassword);
-  try{
-    const b=await db.$transaction(async tx=>{
-      const branch=await tx.branch.create({data:{name:p.data.name,code:p.data.code,slug,address:p.data.address,gstin:p.data.gstin,invoicePrefix:p.data.code.toUpperCase(),receiptHeader:"SRI GANAPATHY ANDHRA'S RUCHULU",phone:p.data.phone||"9490079466",invoiceTitle:"TAX INVOICE",receiptPaperWidth:80}});
-      await tx.user.create({data:{name:`${branch.name} Sales`,username:p.data.salesUsername,passwordHash:hash,role:"CASHIER",branchId:branch.id}});
-      const templateBranch=await tx.branch.findFirst({where:{id:{not:branch.id}},orderBy:{createdAt:"asc"}});
-      if(templateBranch){const template=await tx.menuItem.findMany({where:{branchId:templateBranch.id}});if(template.length)await tx.menuItem.createMany({data:template.map(m=>({name:m.name,category:m.category,description:m.description,barcode:null,hsnCode:m.hsnCode,taxRate:m.taxRate,price:m.price,active:m.active,sortOrder:m.sortOrder,imageUrl:m.imageUrl,branchId:branch.id}))});}
-      for(let i=1;i<=p.data.benchCount;i++)await tx.bench.create({data:{label:`Bench ${i}`,token:`${branch.code}-${crypto.randomUUID()}`,branchId:branch.id}});
-      return branch;
+  const user=await db.user.findUnique({
+    where:{id:s.userId},
+    select:{
+      id:true,
+      name:true,
+      username:true,
+      role:true,
+      active:true,
+      branchId:true,
+      createdAt:true,
+      updatedAt:true,
+      branch:true
+    }
+  });
+
+  if(!user){
+    return res.status(404).json({
+      error:"User not found"
     });
-    res.status(201).json({...b,posUrl:`${baseUrl()}/b/${b.slug}/pos`,customerBaseUrl:`${baseUrl()}/order`,adminUrl:`${baseUrl()}/admin/branch/${b.slug}`});
-  }catch(e){res.status(409).json({error:"Branch code, slug or username already exists"});}
+  }
+
+  res.json({user});
 });
 app.patch("/api/branches/:id",requireAuth,requireSuperAdmin,async(req,res)=>{const p=settingsInput.safeParse(req.body);if(!p.success)return res.status(400).json({error:"Invalid settings"});const b=await db.branch.update({where:{id:String(req.params.id)},data:{...p.data,taxRate:p.data.taxRate}});res.json(b);});
 app.get("/api/branches/:id/settings",requireAuth,requireAdmin,async(req,res)=>{const b=await db.branch.findUnique({where:{id:String(req.params.id)}});if(!b)return res.status(404).json({error:"Branch not found"});const s=(req as any).session;if(s.role!=="SUPER_ADMIN"&&s.branchId!==b.id)return res.status(403).json({error:"Branch access denied"});res.json(b);});
@@ -563,3 +569,4 @@ if (process.env.NETLIFY !== "true") {
 }
 
 export { app };
+
