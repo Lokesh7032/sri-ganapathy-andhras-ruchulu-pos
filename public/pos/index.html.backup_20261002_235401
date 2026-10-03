@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0c3f2c"><meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="manifest" href="/manifest.json"><title>Sri Ganapathy · POS</title>
+<link rel="stylesheet" href="/pos/style.css">
+</head><body>
+<div id="splash" class="splash"><div class="splash-logo"><img src="/brand/logo-icon.jpg" alt="Sri Ganapathy"><div class="spark"></div></div><div class="splash-name">SRI GANAPATHY</div><div class="splash-sub">ANDHRA'S RUCHULU</div><div class="splash-bar"><i></i></div></div>
+<div id="app"></div>
+<script src="/socket.io/socket.io.js"></script><script src="/pos/app.js"></script>
+</body></html>
+
+

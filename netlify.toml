@@ -1,0 +1,24 @@
+[build]
+  command = "npm run build"
+  publish = "public"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+[[redirects]]
+  from = "/"
+  to = "/pos/"
+  status = 302
+
+[[redirects]]
+  from = "/pos"
+  to = "/pos/"
+  status = 200
+
+[[redirects]]
+  from = "/pos/*"
+  to = "/pos/:splat"
+  status = 200
+
+[functions]
+  directory = "netlify/functions"
