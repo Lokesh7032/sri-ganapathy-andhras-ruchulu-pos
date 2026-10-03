@@ -17,6 +17,7 @@ import { initRealtime,emitBranch,emitOrder } from "./realtime.js";
 import { receiptPdf } from "./pdf.js";
 
 const __dirname=path.dirname(fileURLToPath(import.meta.url));
+const publicDir=path.resolve(process.cwd(),"public");
 const app=express(); const server=http.createServer(app);
 /*
  * ================================================================
@@ -538,43 +539,33 @@ function noCache(res:any){
 app.get("/pos",(req,res)=>{
     noCache(res);
     res.sendFile(
-        path.join(__dirname,"../../public/pos/index.html")
+        path.join(publicDir/pos/index.html")
     );
 });
 
 app.get("/pos/",(req,res)=>{
     noCache(res);
     res.sendFile(
-        path.join(__dirname,"../../public/pos/index.html")
+        path.join(publicDir/pos/index.html")
     );
 });
 
 app.get("/pos/index.html",(req,res)=>{
     noCache(res);
     res.sendFile(
-        path.join(__dirname,"../../public/pos/index.html")
+        path.join(publicDir/pos/index.html")
     );
 });
 
-app.get("/pos/login.html",(req,res)=>{
-    noCache(res);
-    res.sendFile(
-        path.join(__dirname,"../../public/pos/login.html")
-    );
-});
+app.get("/pos/login.html",(req,res)=>{ noCache(res); res.redirect("/pos/"); });
 
-app.get("/pos/dashboard.html",(req,res)=>{
-    noCache(res);
-    res.sendFile(
-        path.join(__dirname,"../../public/pos/dashboard.html")
-    );
-});
+app.get("/pos/dashboard.html",(req,res)=>{ noCache(res); res.redirect("/pos/"); });
 
 app.get("/pos/app.js",(req,res)=>{
     noCache(res);
     res.type("application/javascript");
     res.sendFile(
-        path.join(__dirname,"../../public/pos/app.js")
+        path.join(publicDir/pos/app.js")
     );
 });
 
@@ -582,17 +573,11 @@ app.get("/pos/style.css",(req,res)=>{
     noCache(res);
     res.type("text/css");
     res.sendFile(
-        path.join(__dirname,"../../public/pos/style.css")
+        path.join(publicDir/pos/style.css")
     );
 });
 
-app.get("/sw.js",(req,res)=>{
-    noCache(res);
-    res.type("application/javascript");
-    res.sendFile(
-        path.join(__dirname,"../../public/sw.js")
-    );
-});
+
 
 /*
  * API responses must never be cached.
@@ -604,18 +589,27 @@ app.use((req,res,next)=>{
     next();
 });
 
-app.get("/", (_req, res) => { res.redirect("/pos/login.html"); });
+app.get("/", (_req, res) => { res.redirect("/pos/"); });
 
-app.use(express.static(path.join(__dirname,"../../public")));
-app.get("/b/:slug/pos",(_,res)=>res.sendFile(path.join(__dirname,"../../public/pos/index.html")));
-app.get("/b/:slug/pos/*rest",(_,res)=>res.sendFile(path.join(__dirname,"../../public/pos/index.html")));
-app.get("/admin/*rest",(_,res)=>res.sendFile(path.join(__dirname,"../../public/admin/index.html")));
-app.get("/kds/*rest",(_,res)=>res.sendFile(path.join(__dirname,"../../public/kds/index.html")));
-app.get("/order/:token",(_,res)=>res.sendFile(path.join(__dirname,"../../public/customer/index.html")));
-app.get("*rest",(_,res)=>res.sendFile(path.join(__dirname,"../../public/pos/index.html")));
+app.use(express.static(path.join(publicDir")));
+app.get("/b/:slug/pos",(_,res)=>res.sendFile(path.join(publicDir/pos/index.html")));
+app.get("/b/:slug/pos/*rest",(_,res)=>res.sendFile(path.join(publicDir/pos/index.html")));
+app.get("/admin/*rest",(_,res)=>res.sendFile(path.join(publicDir/admin/index.html")));
+app.get("/kds/*rest",(_,res)=>res.sendFile(path.join(publicDir/kds/index.html")));
+app.get("/order/:token",(_,res)=>res.sendFile(path.join(publicDir/customer/index.html")));
+app.get("*rest",(_,res)=>res.sendFile(path.join(publicDir/pos/index.html")));
 
-initRealtime(server);
-const port=Number(process.env.PORT||4000);server.listen(port,()=>console.log(`Sri Ganapathy Andhra's Ruchulu POS running on ${baseUrl()}`));
+export { app };
+
+if (process.env.NETLIFY !== "true") {
+  initRealtime(server);
+  const port=Number(process.env.PORT||4000);
+  server.listen(
+    port,
+    ()=>console.log(`Sri Ganapathy Andhra's Ruchulu POS running on ${baseUrl()}`)
+  );
+}
+
 
 
 
