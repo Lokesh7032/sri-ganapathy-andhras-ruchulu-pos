@@ -27,11 +27,6 @@
   status = 301
 
 [[redirects]]
-  from = "/b/*/pos"
-  to = "/pos/"
-  status = 200
-
-[[redirects]]
   from = "/admin/*"
   to = "/admin/index.html"
   status = 200

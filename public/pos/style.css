@@ -4290,3 +4290,248 @@ body,
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
 }
+
+/* ============================================================
+   SGAR PRODUCTION RESPONSIVE
+   PHONE / TABLET / LAPTOP / DESKTOP
+   ============================================================ */
+
+html,
+body {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    margin: 0;
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+img,
+svg,
+video,
+canvas {
+    max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+    max-width: 100%;
+}
+
+button,
+[role="button"] {
+    touch-action: manipulation;
+}
+
+input,
+select,
+textarea {
+    min-width: 0;
+}
+
+#app,
+#root,
+.app,
+.page,
+.page-root,
+.workspace,
+.content,
+.main,
+.container {
+    min-width: 0;
+    max-width: 100%;
+}
+
+.table-wrap,
+.table-container,
+.data-table {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 1024px) {
+
+    .pos-layout,
+    .billing-layout,
+    .main-layout,
+    .content-layout,
+    .checkout-layout {
+        min-width: 0 !important;
+        max-width: 100% !important;
+    }
+}
+
+@media (max-width: 768px) {
+
+    body {
+        min-height: 100dvh;
+    }
+
+    .container,
+    .page,
+    .content,
+    .main,
+    .workspace {
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+    }
+
+    .billing-layout,
+    .checkout-layout,
+    .two-column,
+    .split {
+        grid-template-columns: minmax(0, 1fr) !important;
+    }
+
+    button,
+    .btn,
+    .action,
+    .product-button,
+    .payment-button {
+        min-height: 44px;
+    }
+
+    input,
+    select,
+    textarea {
+        min-height: 44px;
+        font-size: 16px !important;
+    }
+
+    .toolbar,
+    .actions,
+    .button-row,
+    .filters {
+        flex-wrap: wrap !important;
+    }
+
+    .table-wrap,
+    .table-container,
+    .data-table {
+        overflow-x: auto !important;
+    }
+
+    .modal,
+    .dialog,
+    .popup,
+    .drawer {
+        max-width: calc(100vw - 16px) !important;
+        max-height: calc(100dvh - 16px) !important;
+    }
+
+    .modal-content,
+    .dialog-content {
+        max-width: 100%;
+        max-height: calc(100dvh - 16px);
+        overflow-y: auto;
+    }
+}
+
+@media (max-width: 520px) {
+
+    .grid,
+    .products,
+    .product-grid,
+    .menu-grid,
+    .cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 8px !important;
+    }
+
+    .product-card,
+    .menu-card,
+    .card {
+        min-width: 0 !important;
+        max-width: 100%;
+    }
+
+    .cart,
+    .cart-panel,
+    .bill-panel,
+    .order-panel {
+        min-width: 0 !important;
+        max-width: 100% !important;
+    }
+
+    .modal,
+    .dialog,
+    .popup,
+    .drawer {
+        width: calc(100vw - 16px) !important;
+        max-width: calc(100vw - 16px) !important;
+        margin: 8px !important;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    span,
+    label,
+    td,
+    th {
+        overflow-wrap: anywhere;
+    }
+}
+
+@media (max-width: 380px) {
+
+    .grid,
+    .products,
+    .product-grid,
+    .menu-grid,
+    .cards {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+@supports (padding: env(safe-area-inset-top)) {
+
+    body {
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+}
+
+html,
+body {
+    overflow-x: hidden;
+}
+
+.scroll,
+.scroll-area,
+.list,
+.table-wrap,
+.table-container {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+}
+
+/* Prevent accidental giant desktop layouts on smaller devices. */
+@media (max-width: 1024px) {
+
+    [style*="min-width: 1200px"],
+    [style*="min-width:1200px"],
+    [style*="width: 1200px"],
+    [style*="width:1200px"] {
+        min-width: 0 !important;
+        width: auto !important;
+        max-width: 100% !important;
+    }
+}
+
